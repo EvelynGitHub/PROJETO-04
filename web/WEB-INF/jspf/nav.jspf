@@ -1,0 +1,15 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<%@include file="bootstrap.jspf" %>
+
+<ul class="nav"> 
+  <li class="nav-item">
+    <a class="nav-link" href="index.jsp">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="customers.jsp">Customers</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="manufacturers.jsp">Manufacturer</a>
+  </li>
+</ul>
