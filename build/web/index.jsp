@@ -12,6 +12,10 @@
         <title>Indice</title>
     </head>
     <body>
-        <a href="customers.jsp">Customers</a>
+        <div class="text-center">
+            <%@include file="WEB-INF/jspf/nav.jspf"%>
+            <%@include file="WEB-INF/jspf/footer.jspf"%>
+        </div>
+        
     </body>
 </html>
