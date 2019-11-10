@@ -20,7 +20,12 @@ public class Product {
     private int id;
     private String name;
     private String desc;
+    private String code;
+    private double purchase_cost;    
+    private int quantity;
+    private double markup;
     private Custumer customer;
+    private Manufacturer manufacturer;
     
     public static ArrayList<Product> getList() throws Exception {
        ArrayList<Product> list = new ArrayList<>();
@@ -84,10 +89,54 @@ public class Product {
     }
     
     
+    public static ArrayList<Product> getListProductManufacturer(int id) throws Exception {
+      
+       ArrayList<Product> list = new ArrayList<>();
+      
+       Class.forName("org.apache.derby.jdbc.ClientDriver");
+       String url = "jdbc:derby://localhost:1527/sample";
+       String user = "app";
+       String password = "app";
+       Connection con = DriverManager.getConnection(url, user, password);
+       Statement stmt = con.createStatement();
+       String sql = "SELECT M.MANUFACTURER_ID, M.NAME, P.PRODUCT_CODE, P.PURCHASE_COST, P.QUANTITY_ON_HAND, P.MARKUP, P.DESCRIPTION " +
+                    "FROM PRODUCT AS P " +
+                    "INNER JOIN MANUFACTURER AS M ON P.MANUFACTURER_ID = M.MANUFACTURER_ID " +
+                    "WHERE P.MANUFACTURER_ID = "+id;
+       ResultSet rs = stmt.executeQuery(sql);
+       while(rs.next()){
+           Product c = new Product(
+                rs.getString("PRODUCT_CODE"),
+                rs.getDouble("PURCHASE_COST"),
+                rs.getInt("QUANTITY_ON_HAND"),
+                rs.getDouble("MARKUP"),
+                rs.getString("DESCRIPTION")
+           );
+           
+           c.setManufacturer(new Manufacturer(rs.getInt("MANUFACTURER_ID"), rs.getString("NAME"), ""));
+           
+           list.add(c);
+        }
+       
+       rs.close();
+       stmt.close();
+       con.close();
+       return list;
+    }
+    
+    
 
     public Product(int id, String name, String desc) {
         this.id = id;
         this.name = name;
+        this.desc = desc;
+    }
+    
+    public Product(String code, double purchase_cost, int quantity, double markup, String desc) {
+        this.code = code;
+        this.purchase_cost = purchase_cost;
+        this.quantity = quantity;
+        this.markup = markup;
         this.desc = desc;
     }
 
@@ -98,6 +147,7 @@ public class Product {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+    
 
     public int getId() {
         return id;
@@ -106,6 +156,7 @@ public class Product {
     public void setId(int id) {
         this.id = id;
     }
+    
 
     public String getName() {
         return name;
@@ -114,6 +165,7 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
+    
 
     public Custumer getCustomer() {
         return customer;
@@ -123,5 +175,49 @@ public class Product {
         this.customer = customer;
     }
     
+    
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+    
+
+    public double getPurchase_cost() {
+        return purchase_cost;
+    }
+
+    public void setPurchase_cost(double purchase_cost) {
+        this.purchase_cost = purchase_cost;
+    }
+    
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    
+
+    public double getMarkup() {
+        return markup;
+    }
+
+    public void setMarkup(double markup) {
+        this.markup = markup;
+    }
+    
+
+    public Manufacturer getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
+    }
     
 }
