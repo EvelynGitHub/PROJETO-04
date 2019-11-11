@@ -1,5 +1,5 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
 <div class="card text-center">
-    <p>Desenvolvido por...</p>
+    <p>Desenvolvido por Rodrigo Yuri, Evelyn Francisco e Daniel Ribeiro</p>
 </div>
